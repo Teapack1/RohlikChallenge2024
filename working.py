@@ -11,7 +11,8 @@ def preprocess_data(dataframe, categorical_columns, numerical_columns, date_colu
     encoded_categorical_features = loaded_oh_encoder.transform(dataframe[categorical_columns])
     encoded_feature_names = loaded_oh_encoder.get_feature_names_out(categorical_columns)
     dataframe_encoded = pd.DataFrame(encoded_categorical_features, columns=encoded_feature_names, index=dataframe.index)
-    dataframe_encoded = dataframe_encoded.drop(columns=['holiday_name_nan'])
+    if 'holiday_name_nan' in dataframe_encoded.columns:
+        dataframe_encoded = dataframe_encoded.drop(columns=['holiday_name_nan'])
     
     # Concatenate the encoded features with the original DataFrame
     dataframe = pd.concat([dataframe, dataframe_encoded], axis=1)
@@ -34,6 +35,7 @@ def preprocess_data(dataframe, categorical_columns, numerical_columns, date_colu
     # Scale date features
     if date_columns:
         dataframe[date_columns] = loaded_date_scaler.transform(dataframe[date_columns])
+    
     
     
     return dataframe
