@@ -5,3 +5,4 @@
 /scaler_minmax_weather.joblib
 /scaler_onehot_categorical.joblib
 /__pycache__/*
+/venv/*
